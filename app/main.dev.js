@@ -11,7 +11,6 @@
  * @flow
  */
 import { app, BrowserWindow } from 'electron';
-import MenuBuilder from './menu';
 
 let mainWindow = null;
 
@@ -63,7 +62,8 @@ app.on('ready', async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
-    height: 728
+    height: 728,
+    frame: false
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -82,6 +82,6 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  // const menuBuilder = new MenuBuilder(mainWindow);
+  // menuBuilder.buildMenu();
 });

@@ -1,60 +1,53 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Counter.css';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
 type Props = {
   increment: () => void,
   incrementIfOdd: () => void,
   incrementAsync: () => void,
   decrement: () => void,
-  counter: number
+  counter: number,
+  classes: object
 };
 
-export default class Counter extends Component<Props> {
-  props: Props;
+const counterComponent = (props: Props) => {
+  const {
+    increment,
+    incrementIfOdd,
+    incrementAsync,
+    decrement,
+    counter,
+    classes
+  } = props;
+  return (
+    <Card className={classes.card}>
+      <CardContent>
+        <Typography variant="headline">Counter</Typography>
+        <Typography variant="subheading">{counter}</Typography>
+      </CardContent>
+      <CardActions>
+        <Button color="primary" variant="raised" component={Link} to="/">
+          Back Home
+        </Button>
+        <Button onClick={increment}>+</Button>
+        <Button onClick={decrement}>-</Button>
+        <Button onClick={incrementIfOdd}>+ If Odd</Button>
+        <Button onClick={() => incrementAsync()}>Async</Button>
+      </CardActions>
+    </Card>
+  );
+};
 
-  render() {
-    const {
-      increment,
-      incrementIfOdd,
-      incrementAsync,
-      decrement,
-      counter
-    } = this.props;
-    return (
-      <div>
-        <div className={styles.backButton} data-tid="backButton">
-          <Link to="/">
-            <i className="fa fa-arrow-left fa-3x" />
-          </Link>
-        </div>
-        <div className={`counter ${styles.counter}`} data-tid="counter">
-          {counter}
-        </div>
-        <div className={styles.btnGroup}>
-          <button className={styles.btn} onClick={increment} data-tclass="btn">
-            <i className="fa fa-plus" />
-          </button>
-          <button className={styles.btn} onClick={decrement} data-tclass="btn">
-            <i className="fa fa-minus" />
-          </button>
-          <button
-            className={styles.btn}
-            onClick={incrementIfOdd}
-            data-tclass="btn"
-          >
-            odd
-          </button>
-          <button
-            className={styles.btn}
-            onClick={() => incrementAsync()}
-            data-tclass="btn"
-          >
-            async
-          </button>
-        </div>
-      </div>
-    );
+export default withStyles({
+  card: {
+    width: '95%',
+    margin: '10px auto'
   }
-}
+})(counterComponent);
